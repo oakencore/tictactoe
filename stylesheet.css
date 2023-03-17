@@ -1,0 +1,62 @@
+/* Basic styles */
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+/* Game board styles */
+#gameBoard {
+  display: flex;
+  flex-direction: column;
+  border: 3px solid #333;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #333;
+  background-color: #fff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cell:hover {
+  background-color: #eee;
+}
+
+.cell[data-row="0"] {
+  border-top: none;
+}
+
+.cell[data-col="0"] {
+  border-left: none;
+}
+
+/* Player symbols styles */
+.cell.X,
+.cell.O {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.cell.X {
+  color: #f00;
+}
+
+.cell.O {
+  color: #00f;
+}
