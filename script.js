@@ -10,11 +10,10 @@ const ticTacToeGame = {
     ["", "", ""],
   ],
 
-  init() {
+  init(startingPlayer) {
     this.player1 = this.createPlayer("Player 1", "X");
     this.player2 = this.createPlayer("Player 2", "O");
-    this.currentPlayer = this.player1;
-    this.createGameBoard();
+    this.currentPlayer = startingPlayer;
   },
 
   // Factory function to create players
@@ -42,6 +41,7 @@ const ticTacToeGame = {
 
     if (this.checkWinner()) {
       alert(`${this.currentPlayer.name} wins!`);
+      console.log(`${this.currentPlayer.name} wins!`);
       this.gameEnded = true;
     } else if (this.movesPlayed === 9) {
       alert("It's a draw!");
@@ -53,26 +53,28 @@ const ticTacToeGame = {
   },
 
   // Create the grid and cells
-  createGameBoard() {
-    const gameBoard = document.getElementById("gameBoard");
+createGameBoard() {
+  // Clear any existing grid
+  const gameBoard = document.getElementById("gameBoard");
+  gameBoard.innerHTML = '';
 
-    for (let row = 0; row < 3; row++) {
-      const rowElement = document.createElement("div");
-      rowElement.classList.add("row");
+  for (let row = 0; row < 3; row++) {
+    const rowElement = document.createElement("div");
+    rowElement.classList.add("row");
 
-      for (let col = 0; col < 3; col++) {
-        const cell = document.createElement("div");
-        cell.classList.add("cell");
-        cell.setAttribute("data-row", row);
-        cell.setAttribute("data-col", col);
-        cell.addEventListener("click", (event) => this.cellClicked(event));
+    for (let col = 0; col < 3; col++) {
+      const cell = document.createElement("div");
+      cell.classList.add("cell");
+      cell.setAttribute("data-row", row);
+      cell.setAttribute("data-col", col);
+      cell.addEventListener("click", (event) => this.cellClicked(event));
 
-        rowElement.appendChild(cell);
-      }
-
-      gameBoard.appendChild(rowElement);
+      rowElement.appendChild(cell);
     }
-  },
+
+    gameBoard.appendChild(rowElement);
+  }
+},
 
   // Winning conditions for 1d grid.
   checkWinner() {
@@ -118,7 +120,7 @@ const ticTacToeGame = {
       ["", "", ""],
     ];
 
-    // Change player to player1 and clear moves. 
+    // Change player to player1 and clear moves.
     this.currentPlayer = this.player1;
     this.movesPlayed = 0;
     this.gameEnded = false;
@@ -129,8 +131,32 @@ const ticTacToeGame = {
       cell.textContent = "";
     });
   },
+
+  setupStartGameButton() {
+    const startGameButton = document.getElementById("startGame");
+    startGameButton.addEventListener("click", () => {
+      const playerSelection = document.getElementById("playerSelection");
+      const selectedPlayer = playerSelection.value;
+      this.restartGame();
+
+      if (selectedPlayer === "player1") {
+        this.init(this.player1);
+      } else {
+        this.init(this.player2);
+      }
+
+      // Show the game board
+      const gameBoard = document.getElementById("gameBoard");
+      gameBoard.style.display = "block";
+
+      // Create the game board
+      this.createGameBoard();
+    });
+  },
 };
 
 // Initialise the game
 ticTacToeGame.init();
 ticTacToeGame.restart();
+ticTacToeGame.setupStartGameButton();
+

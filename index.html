@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,9 +8,18 @@
   <title>tictactoe</title>
   <link rel="stylesheet" href="stylesheet.css" />
 </head>
+
 <body>
-  <div id="gameBoard"></div>
-  <button id="restartButton">Restart</button>
+  <div id="gameBoard" style="display: none;"></div>
+  <div id="gameStats">
+    <button id="restartButton">Restart</button>
+    <select id="playerSelection">
+      <option value="player1">P1 X</option>
+      <option value="player2">P2 O</option>
+    </select>
+    <button id="startGame">Start Game</button>
+  </div>
   <script src="script.js"></script>
 </body>
+
 </html>
