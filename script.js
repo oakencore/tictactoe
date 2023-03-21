@@ -21,25 +21,20 @@ const ticTacToeGame = {
   setupStartGameButton() {
     const startGameButton = document.getElementById("startGame");
     startGameButton.addEventListener("click", () => {
-      const playerSelection = document.getElementById("playerSelection");
-      const selectedPlayer = playerSelection.value;
-
       const player1SymbolSelect = document.getElementById("player1Symbol");
       const player1Symbol = player1SymbolSelect.value;
       const player2Symbol = player1Symbol === "X" ? "O" : "X";
-
-      const startingPlayer =
-        selectedPlayer === "player1" ? this.player1 : this.player2;
+      const startingPlayer = this.player1;
+  
       this.init(startingPlayer, player1Symbol, player2Symbol);
-
       this.restartGame();
       document.getElementById("gameBoard").style.display = "block";
       this.createGameBoard();
     });
-
+  
     this.restart();
   },
-
+  
   // Handle what happens when a cell is clicked
   cellClicked(event) {
     if (this.gameEnded) return;

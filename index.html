@@ -1,35 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>tictactoe</title>
-  <link rel="stylesheet" href="stylesheet.css" />
-</head>
-
-<body>
-  <div id="gameBoard" style="display: none;"></div>
-  <div id="gameStats">
-    <button id="restartButton">Restart</button>
-    <div>
-      <label for="playerSelection">Choose starting player:</label>
-      <select id="playerSelection">
-        <option value="player1">Player 1</option>
-        <option value="player2">Player 2</option>
-      </select>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="stylesheet.css" />
+  </head>
+  <body>
+    <div id="gameBoard" style="display: none;"></div>
+    <div id="gameStats">
+      <button id="restartButton">Restart</button>
+      <div>
+        <label for="player1Symbol">Player Symbol:</label>
+        <select id="player1Symbol">
+          <option value="X">X</option>
+          <option value="O">O</option>
+        </select>
+      </div>
+      <button id="startGame">Start Game</button>
     </div>
-    <div>
-      <label for="player1Symbol">Player 1 Symbol:</label>
-      <select id="player1Symbol">
-        <option value="X">X</option>
-        <option value="O">O</option>
-      </select>
-    </div>
-    <button id="startGame">Start Game</button>
-  </div>
-  <script src="script.js"></script>
-</body>
-
+    <script src="script.js"></script>
+  </body>
 </html>
