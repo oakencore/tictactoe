@@ -13,10 +13,20 @@
   <div id="gameBoard" style="display: none;"></div>
   <div id="gameStats">
     <button id="restartButton">Restart</button>
-    <select id="playerSelection">
-      <option value="player1">P1 X</option>
-      <option value="player2">P2 O</option>
-    </select>
+    <div>
+      <label for="playerSelection">Choose starting player:</label>
+      <select id="playerSelection">
+        <option value="player1">Player 1</option>
+        <option value="player2">Player 2</option>
+      </select>
+    </div>
+    <div>
+      <label for="player1Symbol">Player 1 Symbol:</label>
+      <select id="player1Symbol">
+        <option value="X">X</option>
+        <option value="O">O</option>
+      </select>
+    </div>
     <button id="startGame">Start Game</button>
   </div>
   <script src="script.js"></script>

@@ -1,6 +1,7 @@
 const ticTacToeGame = {
-  player1: null,
-  player2: null,
+  // Not all of these are used yet.
+  player1: { name: "Player 1", symbol: "X", score: 0 },
+  player2: { name: "Player 2", symbol: "O", score: 0 },
   currentPlayer: null,
   movesPlayed: 0,
   gameEnded: false,
@@ -10,22 +11,36 @@ const ticTacToeGame = {
     ["", "", ""],
   ],
 
-  init(startingPlayer) {
-    this.player1 = this.createPlayer("Player 1", "X");
-    this.player2 = this.createPlayer("Player 2", "O");
+  init(startingPlayer, player1Symbol, player2Symbol) {
+    this.player1.symbol = player1Symbol;
+    this.player2.symbol = player2Symbol;
     this.currentPlayer = startingPlayer;
   },
 
-  // Factory function to create players
-  createPlayer(name, symbol) {
-    return {
-      name,
-      symbol,
-      score: 0,
-    };
+  //Sets up event listener for the start game button.
+  setupStartGameButton() {
+    const startGameButton = document.getElementById("startGame");
+    startGameButton.addEventListener("click", () => {
+      const playerSelection = document.getElementById("playerSelection");
+      const selectedPlayer = playerSelection.value;
+
+      const player1SymbolSelect = document.getElementById("player1Symbol");
+      const player1Symbol = player1SymbolSelect.value;
+      const player2Symbol = player1Symbol === "X" ? "O" : "X";
+
+      const startingPlayer =
+        selectedPlayer === "player1" ? this.player1 : this.player2;
+      this.init(startingPlayer, player1Symbol, player2Symbol);
+
+      this.restartGame();
+      document.getElementById("gameBoard").style.display = "block";
+      this.createGameBoard();
+    });
+
+    this.restart();
   },
 
-  // Handle cell clicks
+  // Handle what happens when a cell is clicked
   cellClicked(event) {
     if (this.gameEnded) return;
 
@@ -41,42 +56,78 @@ const ticTacToeGame = {
 
     if (this.checkWinner()) {
       alert(`${this.currentPlayer.name} wins!`);
-      console.log(`${this.currentPlayer.name} wins!`);
       this.gameEnded = true;
     } else if (this.movesPlayed === 9) {
       alert("It's a draw!");
       this.gameEnded = true;
     } else {
-      this.currentPlayer =
-        this.currentPlayer === this.player1 ? this.player2 : this.player1;
+      this.switchPlayer();
+      this.computerMove();
     }
   },
 
-  // Create the grid and cells
-createGameBoard() {
-  // Clear any existing grid
-  const gameBoard = document.getElementById("gameBoard");
-  gameBoard.innerHTML = '';
+  computerMove() {
+    if (this.gameEnded || !this.hasEmptyCells()) return;
 
-  for (let row = 0; row < 3; row++) {
-    const rowElement = document.createElement("div");
-    rowElement.classList.add("row");
+    let row, col;
+    do {
+      row = Math.floor(Math.random() * 3);
+      col = Math.floor(Math.random() * 3);
+    } while (this.gameBoardArray[row][col] !== "");
 
-    for (let col = 0; col < 3; col++) {
-      const cell = document.createElement("div");
-      cell.classList.add("cell");
-      cell.setAttribute("data-row", row);
-      cell.setAttribute("data-col", col);
-      cell.addEventListener("click", (event) => this.cellClicked(event));
+    this.gameBoardArray[row][col] = this.currentPlayer.symbol;
 
-      rowElement.appendChild(cell);
+    const cell = document.querySelector(
+      `.cell[data-row="${row}"][data-col="${col}"]`
+    );
+    cell.textContent = this.currentPlayer.symbol;
+
+    this.movesPlayed++;
+
+    if (this.checkWinner()) {
+      alert(`${this.currentPlayer.name} wins!`);
+      this.gameEnded = true;
+    } else if (this.movesPlayed === 9) {
+      alert("It's a draw!");
+      this.gameEnded = true;
+    } else {
+      this.switchPlayer();
     }
+  },
 
-    gameBoard.appendChild(rowElement);
-  }
-},
+  // Factory function to create players
+  createPlayer(name, symbol) {
+    return {
+      name,
+      symbol,
+      score: 0,
+    };
+  },
 
-  // Winning conditions for 1d grid.
+  // Create the grid and cells
+  createGameBoard() {
+    // Clear any existing grid if a game was ongoing.
+    const gameBoard = document.getElementById("gameBoard");
+    gameBoard.innerHTML = "";
+
+    for (let row = 0; row < 3; row++) {
+      const rowElement = document.createElement("div");
+      rowElement.classList.add("row");
+
+      for (let col = 0; col < 3; col++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.setAttribute("data-row", row);
+        cell.setAttribute("data-col", col);
+        cell.addEventListener("click", (event) => this.cellClicked(event));
+
+        rowElement.appendChild(cell);
+      }
+
+      gameBoard.appendChild(rowElement);
+    }
+  },
+
   checkWinner() {
     const winningConditions = [
       [0, 1, 2],
@@ -105,15 +156,15 @@ createGameBoard() {
   },
 
   restart() {
-    // Event listener for restart button
+    // Event listener for restart button that calls restartGame() when pressed.
     const restartButton = document.getElementById("restartButton");
     restartButton.addEventListener("click", () => {
       this.restartGame();
     });
   },
 
+  // Clears symbols from gameboardarray
   restartGame() {
-    // Clears symbols from gameboardarray
     this.gameBoardArray = [
       ["", "", ""],
       ["", "", ""],
@@ -132,31 +183,14 @@ createGameBoard() {
     });
   },
 
-  setupStartGameButton() {
-    const startGameButton = document.getElementById("startGame");
-    startGameButton.addEventListener("click", () => {
-      const playerSelection = document.getElementById("playerSelection");
-      const selectedPlayer = playerSelection.value;
-      this.restartGame();
+  hasEmptyCells() {
+    return this.gameBoardArray.some((row) => row.some((cell) => cell === ""));
+  },
 
-      if (selectedPlayer === "player1") {
-        this.init(this.player1);
-      } else {
-        this.init(this.player2);
-      }
-
-      // Show the game board
-      const gameBoard = document.getElementById("gameBoard");
-      gameBoard.style.display = "block";
-
-      // Create the game board
-      this.createGameBoard();
-    });
+  switchPlayer() {
+    this.currentPlayer =
+      this.currentPlayer === this.player1 ? this.player2 : this.player1;
   },
 };
 
-// Initialise the game
-ticTacToeGame.init();
-ticTacToeGame.restart();
 ticTacToeGame.setupStartGameButton();
-
