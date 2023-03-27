@@ -21,8 +21,7 @@ const ticTacToeGame = {
   setupStartGameButton() {
     const startGameButton = document.getElementById("startGame");
     startGameButton.addEventListener("click", () => {
-      const player1SymbolSelect = document.getElementById("player1Symbol");
-      const player1Symbol = player1SymbolSelect.value;
+      const player1Symbol = document.getElementById("player1Symbol").value;
       const player2Symbol = player1Symbol === "X" ? "O" : "X";
       const startingPlayer = this.player1;
 
