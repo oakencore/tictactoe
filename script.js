@@ -1,5 +1,3 @@
-// TODO. 2. Add movesPlayed to HTML. 3. Improve 'look' using css
-
 const ticTacToeGame = {
   // Not all of these are used yet.
   player1: { name: "Player 1", symbol: "X", score: 0 },
