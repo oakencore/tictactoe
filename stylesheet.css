@@ -1,28 +1,36 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
-  background-color: #f0f0f0;
+  background-color: #f5f5f5;
+  color: #444;
 }
 
-#gameStats{
-display: flex;
-flex-direction: column;
-margin-top: 25px;
-gap: 7px;
+#gameStats {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+  gap: 7px;
+  align-items: center;
+  text-align: center;
 }
 
-/* Game board styles */
+/* Grid */
 #gameBoard {
   display: flex;
   flex-direction: column;
-  border: 3px solid #333;
+  border: 1px solid #ddd;
   border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  background-color: #fff;
 }
 
 .row {
@@ -35,14 +43,16 @@ gap: 7px;
   align-items: center;
   width: 100px;
   height: 100px;
-  border: 1px solid #333;
+  border: 1px solid #ddd;
   background-color: #fff;
   cursor: pointer;
   user-select: none;
+  font-weight: 500;
+  color: #444;
 }
 
 .cell:hover {
-  background-color: #eee;
+  background-color: #f5f5f5;
 }
 
 .cell[data-row="0"] {
@@ -51,4 +61,29 @@ gap: 7px;
 
 .cell[data-col="0"] {
   border-left: none;
+}
+
+/* Buttons player selectors */
+button, select {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 14px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #444;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover, select:hover {
+  background-color: #f5f5f5;
+}
+
+button:active, select:active {
+  background-color: #eee;
+}
+
+button:focus, select:focus {
+  outline: none;
 }
